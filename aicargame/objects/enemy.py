@@ -11,5 +11,6 @@ class Enemy(DrawableObject):
     
     def update(self):
         self.rect.move_ip((0, self.__velocity))
-        if(self.rect.bottom > 600):
+        win_x, win_y = pygame.display.get_window_size()
+        if(self.rect.bottom > win_y):
             self.kill()
