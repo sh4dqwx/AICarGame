@@ -1,18 +1,14 @@
 import pygame
 from pygame import Vector2
+from random import randint
 
-from aicargame.objects.player import Player
+from aicargame.game.game import Game
+from aicargame.game.objects.player import Player
+from aicargame.game.objects.enemy import Enemy
 
 pygame.init()
 
-win = pygame.display.set_mode((500, 500))
-
-pygame.display.set_caption("AICarGame")
-
-obj = Player(Vector2(50, 50), Vector2(100, 100))
-
-all_sprites = pygame.sprite.Group()
-all_sprites.add(obj)
+game = Game()
 
 run = True
 
@@ -23,11 +19,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    win.fill((0, 0, 0))
-
-    all_sprites.update()
-    all_sprites.draw(win)
-
+    game.update()
     pygame.display.update()
 
 pygame.quit()

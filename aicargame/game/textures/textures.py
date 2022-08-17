@@ -1,11 +1,12 @@
 from enum import Enum, auto
 from pathlib import Path
 
-PREFIX = Path("aicargame/textures/media/").resolve()
+PREFIX = Path("aicargame/game/textures/media/").resolve()
 
 
 class Textures(Enum):
     PLAYER = "player.gif"
+    ENEMY = "nuclear-bomb.png"
 
     def __str__(self) -> str:
         return str(PREFIX / self.value)
