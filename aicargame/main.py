@@ -22,8 +22,7 @@ run = True
 
 def spawnEnemy():
     rand = randint(0, 2)
-    newEnemy = Enemy(Vector2(rand*200+100, -100), Vector2(100, 100), None, (255, 0, 0))
-    print(rand*200+100)
+    newEnemy = Enemy(Vector2(rand*200+100, -100), Vector2(100, 100))
     all_sprites.add(newEnemy)
 
 while run:
