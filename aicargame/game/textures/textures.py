@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from pathlib import Path
 
-PREFIX = Path("aicargame/textures/media/").resolve()
+PREFIX = Path("aicargame/game/textures/media/").resolve()
 
 
 class Textures(Enum):

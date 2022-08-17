@@ -1,15 +1,16 @@
 import pygame
 from pygame import Vector2
 
-from aicargame.objects.drawableobject import DrawableObject
-from aicargame.textures.textures import Textures
+from aicargame.game.objects.drawableobject import DrawableObject
+from aicargame.game.textures.textures import Textures
+from aicargame.globals import PLAYER_VELOCITY
 
 
 class Player(DrawableObject):
     def __init__(self, position: Vector2, size: Vector2):
         super().__init__(position, size, Textures.PLAYER)
         print(str(Textures.PLAYER))
-        self.__velocity = 10
+        self.__velocity = PLAYER_VELOCITY
         self.__x_border = 10
         self.__y_border = 10
 
