@@ -1,12 +1,13 @@
 import pygame
 from pygame import Vector2
+from random import randint
 
 from aicargame.objects.player import Player
 from aicargame.objects.enemy import Enemy
 
 pygame.init()
 
-win = pygame.display.set_mode((500, 500))
+win = pygame.display.set_mode((600, 600))
 
 enemyTimer = 5000
 
@@ -19,6 +20,12 @@ all_sprites.add(obj)
 
 run = True
 
+def spawnEnemy():
+    rand = randint(0, 2)
+    newEnemy = Enemy(Vector2(rand*200+100, -100), Vector2(100, 100), None, (255, 0, 0))
+    print(rand*200+100)
+    all_sprites.add(newEnemy)
+
 while run:
     pygame.time.delay(10)
 
@@ -27,8 +34,7 @@ while run:
             run = False
 
     if(enemyTimer >= 1000):
-        newEnemy = Enemy(Vector2(400, -70), Vector2(70, 70), None, (255, 0, 0))
-        all_sprites.add(newEnemy)
+        spawnEnemy()
         enemyTimer = 0
     enemyTimer += 10
 
