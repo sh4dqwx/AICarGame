@@ -29,6 +29,7 @@ class TexturesMeta(EnumMeta):
 
 
 class Textures(Enum, metaclass=TexturesMeta):
+
     BACKGROUND = "bg.png"
     PLAYER = "player.gif"
     ENEMY = "nuclear-bomb.png"

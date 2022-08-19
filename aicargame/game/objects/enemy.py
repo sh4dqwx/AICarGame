@@ -23,9 +23,10 @@ from aicargame.globals import (
 
 class Enemy(DrawableObject):
     timer = time.time()
+    shift = Vector2(1, 1)
 
     def __init__(self, position: Vector2):
-        super().__init__(position, (0, 0), color=(255, 0, 0))
+        super().__init__(position, (0, 0), texture=Textures.ENEMY)
 
         if position == FIRST_LANE_START:
             self.__velocity = FIRST_LANE_VECTOR
@@ -36,33 +37,32 @@ class Enemy(DrawableObject):
 
         self.__velocity = self.__velocity * ENEMY_SPEED
         self.__size = ENEMY_START_SIZE
-        self.rect.move_ip(Vector2(-WINDOW_WIDTH / 50, 0))
+        self.__center = self.rect.center
 
     def update(self):
-        print("przed zmiana: pos - " + str(self.rect.center) + ", size - " + str(self.rect.size))
-        shift = Vector2(1, 1)
-        self.__size = self.__size + shift
-
-        if self.RAW_TEXTURE is not None:
-            self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
-
-        self.p_center = self.rect.center
-        self.rect.inflate_ip(1, 1)
-        self.rect.center = self.p_center
-
         self.rect.move_ip(self.__velocity)
+        self.__center = self.rect.center
         if self.rect.top > WINDOW_HEIGHT:
             self.kill()
 
+        if self.__size.x > ENEMY_MAX_SIZE.x :
+            self.__size = ENEMY_MAX_SIZE
+        elif self.__size.x < ENEMY_MAX_SIZE.x:
+            self.__size = self.__size + Enemy.shift
+
+        self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
+
+        self.rect = self.image.get_rect()
+        self.rect.center = self.__center
+
     @staticmethod
     def spawnEnemy():
-        #rand = randint(0, 2)
-        #if rand == 0:
-        #    newEnemy = Enemy(FIRST_LANE_START)
-        #elif rand == 1:
-        #    newEnemy = Enemy(SECOND_LANE_START)
-        #else:
-        #    newEnemy = Enemy(THIRD_LANE_START)
-        newEnemy = Enemy(SECOND_LANE_START)
+        rand = randint(0, 2)
+        if rand == 0:
+            newEnemy = Enemy(FIRST_LANE_START)
+        elif rand == 1:
+            newEnemy = Enemy(SECOND_LANE_START)
+        else:
+            newEnemy = Enemy(THIRD_LANE_START)
 
         return newEnemy
