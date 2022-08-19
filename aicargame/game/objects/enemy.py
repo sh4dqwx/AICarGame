@@ -25,7 +25,7 @@ class Enemy(DrawableObject):
     timer = time.time()
 
     def __init__(self, position: Vector2):
-        super().__init__(position, (0, 0), texture=Textures.ENEMY)
+        super().__init__(position, (0, 0), color=(255, 0, 0))
 
         if position == FIRST_LANE_START:
             self.__velocity = FIRST_LANE_VECTOR
@@ -39,10 +39,12 @@ class Enemy(DrawableObject):
         self.rect.move_ip(Vector2(-WINDOW_WIDTH / 50, 0))
 
     def update(self):
+        print("przed zmiana: pos - " + str(self.rect.center) + ", size - " + str(self.rect.size))
         shift = Vector2(1, 1)
         self.__size = self.__size + shift
 
-        self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
+        if self.RAW_TEXTURE is not None:
+            self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
 
         self.p_center = self.rect.center
         self.rect.inflate_ip(1, 1)
@@ -54,12 +56,13 @@ class Enemy(DrawableObject):
 
     @staticmethod
     def spawnEnemy():
-        rand = randint(0, 2)
-        if rand == 0:
-            newEnemy = Enemy(FIRST_LANE_START)
-        elif rand == 1:
-            newEnemy = Enemy(SECOND_LANE_START)
-        else:
-            newEnemy = Enemy(THIRD_LANE_START)
+        #rand = randint(0, 2)
+        #if rand == 0:
+        #    newEnemy = Enemy(FIRST_LANE_START)
+        #elif rand == 1:
+        #    newEnemy = Enemy(SECOND_LANE_START)
+        #else:
+        #    newEnemy = Enemy(THIRD_LANE_START)
+        newEnemy = Enemy(SECOND_LANE_START)
 
         return newEnemy
