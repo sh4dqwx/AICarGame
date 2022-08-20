@@ -1,4 +1,5 @@
 import time
+import math
 from random import randint
 
 import pygame
@@ -34,23 +35,29 @@ class Enemy(DrawableObject):
         else:
             self.__velocity = THIRD_LANE_VECTOR
 
+        self.__time = 1
         self.__velocity = self.__velocity * ENEMY_SPEED
-        self.__size = ENEMY_START_SIZE
-        self.rect.move_ip(Vector2(-WINDOW_WIDTH / 50, 0))
+        self.__size = Vector2(ENEMY_START_SIZE)
+        self.__center = Vector2(self.rect.center)
 
     def update(self):
-        shift = Vector2(1, 1)
-        self.__size = self.__size + shift
+        self.__center = self.__center + self.__velocity
+        self.rect.center = self.__center
+        if self.rect.top > WINDOW_HEIGHT:
+            self.kill()
+
+        self.__time = self.__time + 1
+        if self.__size.x > ENEMY_MAX_SIZE.x :
+            self.__size = ENEMY_MAX_SIZE
+        elif self.__size.x < ENEMY_MAX_SIZE.x:
+            log = math.log(self.__time)
+            self.__size.x = log * (ENEMY_MAX_SIZE.x / 5)
+            self.__size.y = log * (ENEMY_MAX_SIZE.y / 5)
 
         self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
 
-        self.p_center = self.rect.center
-        self.rect.inflate_ip(1, 1)
-        self.rect.center = self.p_center
-
-        self.rect.move_ip(self.__velocity)
-        if self.rect.top > WINDOW_HEIGHT:
-            self.kill()
+        self.rect = self.image.get_rect()
+        self.rect.center = self.__center
 
     @staticmethod
     def spawnEnemy():
