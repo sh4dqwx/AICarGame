@@ -1,7 +1,6 @@
-from re import A
 import time
+import math
 from random import randint
-from tkinter import FIRST
 
 import pygame
 from pygame import Vector2
@@ -25,7 +24,6 @@ from aicargame.globals import (
 
 class Enemy(DrawableObject):
     timer = time.time()
-    shift = Vector2(1, 1)
 
     def __init__(self, position: Vector2):
         super().__init__(position, (0, 0), texture=Textures.ENEMY)
@@ -37,8 +35,9 @@ class Enemy(DrawableObject):
         else:
             self.__velocity = THIRD_LANE_VECTOR
 
+        self.__time = 1
         self.__velocity = self.__velocity * ENEMY_SPEED
-        self.__size = ENEMY_START_SIZE
+        self.__size = Vector2(ENEMY_START_SIZE)
         self.__center = Vector2(self.rect.center)
 
     def update(self):
@@ -47,15 +46,15 @@ class Enemy(DrawableObject):
         if self.rect.top > WINDOW_HEIGHT:
             self.kill()
 
+        self.__time = self.__time + 1
         if self.__size.x > ENEMY_MAX_SIZE.x :
             self.__size = ENEMY_MAX_SIZE
         elif self.__size.x < ENEMY_MAX_SIZE.x:
-            self.__size = self.__size + Enemy.shift
+            log = math.log(self.__time)
+            self.__size.x = log * (ENEMY_MAX_SIZE.x / 5)
+            self.__size.y = log * (ENEMY_MAX_SIZE.y / 5)
 
-        if self.RAW_TEXTURE is None:
-            self.image = pygame.transform.scale(self.image, self.__size)
-        else:
-            self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
+        self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
 
         self.rect = self.image.get_rect()
         self.rect.center = self.__center
