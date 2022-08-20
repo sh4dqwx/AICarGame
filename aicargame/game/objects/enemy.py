@@ -1,5 +1,7 @@
+from re import A
 import time
 from random import randint
+from tkinter import FIRST
 
 import pygame
 from pygame import Vector2
@@ -37,11 +39,11 @@ class Enemy(DrawableObject):
 
         self.__velocity = self.__velocity * ENEMY_SPEED
         self.__size = ENEMY_START_SIZE
-        self.__center = self.rect.center
+        self.__center = Vector2(self.rect.center)
 
     def update(self):
-        self.rect.move_ip(self.__velocity)
-        self.__center = self.rect.center
+        self.__center = self.__center + self.__velocity
+        self.rect.center = self.__center
         if self.rect.top > WINDOW_HEIGHT:
             self.kill()
 
@@ -50,7 +52,10 @@ class Enemy(DrawableObject):
         elif self.__size.x < ENEMY_MAX_SIZE.x:
             self.__size = self.__size + Enemy.shift
 
-        self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
+        if self.RAW_TEXTURE is None:
+            self.image = pygame.transform.scale(self.image, self.__size)
+        else:
+            self.image = pygame.transform.scale(self.RAW_TEXTURE, self.__size)
 
         self.rect = self.image.get_rect()
         self.rect.center = self.__center
