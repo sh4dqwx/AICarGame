@@ -31,7 +31,6 @@ class Enemy(DrawableObject):
     spawn_timer = time.time()
     vel_change_timer = time.time()
     speed = ENEMY_START_VELOCITY
-    print(speed)
 
     def __init__(self, position: Vector2):
         super().__init__(position, (0, 0), texture=Textures.ENEMY)
@@ -71,8 +70,10 @@ class Enemy(DrawableObject):
 
         self.resize()
 
-        if(self._velocity != self._direction * Enemy.speed and self._time >= self._max_time * 0.2):
+        if self._velocity != self._direction * Enemy.speed and self._time >= self._max_time * 0.2:
             self._velocity = self._direction * Enemy.speed
+        if self.rect.bottom >= WINDOW_HEIGHT:
+            self._velocity *= 2
 
         self.image = pygame.transform.scale(self.RAW_TEXTURE, self._size)
 

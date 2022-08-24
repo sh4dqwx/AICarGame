@@ -33,8 +33,7 @@ class Game:
     def reset(self):
         self.__player.reset()
         self.enemySprites.empty()
-        Enemy.speed = WINDOW_HEIGHT * ENEMY_START_VELOCITY
-        print(Enemy.speed)        
+        Enemy.speed = WINDOW_HEIGHT * ENEMY_START_VELOCITY        
         self.gui.reset()
 
     def checkCollisions(self):
