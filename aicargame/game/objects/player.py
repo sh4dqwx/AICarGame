@@ -12,7 +12,7 @@ from aicargame.globals import (
 
 PLAYER_START = Vector2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.9)
 PLAYER_SIZE = Vector2(WINDOW_WIDTH, WINDOW_WIDTH * 0.9) * PLAYER_SIZE
-
+PLAYER_VELOCITY = WINDOW_WIDTH * PLAYER_VELOCITY
 
 class Player(DrawableObject):
     def __init__(self, position: Vector2 = PLAYER_START):

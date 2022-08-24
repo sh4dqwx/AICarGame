@@ -17,8 +17,7 @@ from aicargame.globals import (
 
 ENEMY_START_SIZE = Vector2(WINDOW_WIDTH, WINDOW_WIDTH * 0.9) * ENEMY_START_SIZE
 ENEMY_MAX_SIZE = Vector2(WINDOW_WIDTH, WINDOW_WIDTH * 0.9) * ENEMY_MAX_SIZE
-ENEMY_START_AREA = ENEMY_START_SIZE.x * ENEMY_START_SIZE.y
-ENEMY_MAX_AREA = ENEMY_MAX_SIZE.x * ENEMY_MAX_SIZE.y
+ENEMY_START_VELOCITY = WINDOW_HEIGHT * ENEMY_START_VELOCITY
 
 SECOND_LANE_START = Vector2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.35)
 FIRST_LANE_START = Vector2(WINDOW_WIDTH * 0.3, WINDOW_HEIGHT * 0.35)
@@ -32,6 +31,7 @@ class Enemy(DrawableObject):
     spawn_timer = time.time()
     vel_change_timer = time.time()
     speed = ENEMY_START_VELOCITY
+    print(speed)
 
     def __init__(self, position: Vector2):
         super().__init__(position, (0, 0), texture=Textures.ENEMY)
@@ -63,7 +63,6 @@ class Enemy(DrawableObject):
 
     def update(self):
         self._time += 1
-        print(self._velocity)
 
         self._center = self._center + self._velocity
         self.rect.center = self._center
