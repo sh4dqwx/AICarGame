@@ -17,8 +17,7 @@ from aicargame.globals import (
 
 ENEMY_START_SIZE = Vector2(WINDOW_WIDTH, WINDOW_WIDTH * 0.9) * ENEMY_START_SIZE
 ENEMY_MAX_SIZE = Vector2(WINDOW_WIDTH, WINDOW_WIDTH * 0.9) * ENEMY_MAX_SIZE
-ENEMY_START_AREA = ENEMY_START_SIZE.x * ENEMY_START_SIZE.y
-ENEMY_MAX_AREA = ENEMY_MAX_SIZE.x * ENEMY_MAX_SIZE.y
+ENEMY_START_VELOCITY = WINDOW_HEIGHT * ENEMY_START_VELOCITY
 
 SECOND_LANE_START = Vector2(WINDOW_WIDTH * 0.5, WINDOW_HEIGHT * 0.35)
 FIRST_LANE_START = Vector2(WINDOW_WIDTH * 0.3, WINDOW_HEIGHT * 0.35)
@@ -63,7 +62,6 @@ class Enemy(DrawableObject):
 
     def update(self):
         self._time += 1
-        print(self._velocity)
 
         self._center = self._center + self._velocity
         self.rect.center = self._center
@@ -72,8 +70,10 @@ class Enemy(DrawableObject):
 
         self.resize()
 
-        if(self._velocity != self._direction * Enemy.speed and self._time >= self._max_time * 0.2):
+        if self._velocity != self._direction * Enemy.speed and self._time >= self._max_time * 0.2:
             self._velocity = self._direction * Enemy.speed
+        if self.rect.bottom >= WINDOW_HEIGHT:
+            self._velocity *= 2
 
         self.image = pygame.transform.scale(self.RAW_TEXTURE, self._size)
 
