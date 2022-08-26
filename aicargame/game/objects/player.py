@@ -37,22 +37,11 @@ class Player(DrawableObject):
         self._keep_inside()
 
     def _keep_inside(self):
-        win_x, win_y = pygame.display.get_window_size()
+        if self.rect.left < WINDOW_WIDTH * 0.02:
+            self.rect.left = WINDOW_WIDTH * 0.02
 
-        win_x_border = win_x / self.__x_border
-        win_y_border = win_y / self.__y_border
-
-        if self.rect.centerx < win_x_border:
-            self.rect.centerx = win_x_border
-
-        if self.rect.centerx > win_x - win_x_border:
-            self.rect.centerx = win_x - win_x_border
-
-        if self.rect.centery < win_y_border:
-            self.rect.centery = win_y_border
-
-        if self.rect.centery > win_y - win_y_border:
-            self.rect.centery = win_y - win_y_border
+        if self.rect.right > WINDOW_WIDTH * 0.98:
+            self.rect.right = WINDOW_WIDTH * 0.98
 
     def reset(self):
         self.rect.center = PLAYER_START
